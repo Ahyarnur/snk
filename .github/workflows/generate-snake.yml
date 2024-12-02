@@ -1,0 +1,29 @@
+name: Generate Snake
+
+on:
+  schedule:
+    # Jalankan setiap hari pada pukul 00:00 UTC
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+    # Memungkinkan menjalankan workflow secara manual
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout Repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Generate Snake Animation
+      - name: Generate snake animation
+        uses: Platane/snk/svg-only@v2
+        with:
+          output: dist/github-contribution-grid-snake.svg
+
+      # Step 3: Push the Generated File
+      - name: Push the generated file
+        uses: actions/upload-artifact@v3
+        with:
+          name: snake
+          path: dist/github-contribution-grid-snake.svg
